@@ -63,7 +63,7 @@ public class BootStrapData implements CommandLineRunner {
         Publisher savedPublisher = publisherRepository.save(publisher1);
 
         book1Saved.setPublisher(savedPublisher);
-      //  book2Saved.setPublisher(savedPublisher);
+        book2Saved.setPublisher(savedPublisher);
 
         authorRepository.save(author1Saved);
         authorRepository.save(author2Saved);
