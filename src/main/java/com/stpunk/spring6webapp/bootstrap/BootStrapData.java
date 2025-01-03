@@ -30,18 +30,28 @@ public class BootStrapData implements CommandLineRunner {
         author1.setFirstName("John");
         author1.setLastName("Doe");
 
-        Author author2 = new Author();
-        author2.setFirstName("Jane");
-        author2.setLastName("Smith");
-
-        // Create Books
         Book book1 = new Book();
         book1.setTitle("Spring in Action");
         book1.setIsbn("123-456");
 
+        Author author1Saved = authorRepository.save(author1);
+        Book book1Saved = bookRepository.save(book1);
+
+        Author author2 = new Author();
+        author2.setFirstName("Jane");
+        author2.setLastName("Smith");
+
         Book book2 = new Book();
         book2.setTitle("Spring Boot Essentials");
         book2.setIsbn("789-101");
+
+        Author author2Saved = authorRepository.save(author2);
+        Book book2Saved = bookRepository.save(book2);
+
+        author1Saved.getBooks().add(book1Saved);
+        author2Saved.getBooks().add(book2Saved);
+        book1Saved.getAuthors().add(author1Saved);
+        book2Saved.getAuthors().add(author2Saved);
 
         Publisher publisher1 = new Publisher();
         publisher1.setPublisherName("Ababagalamaga");
@@ -52,22 +62,13 @@ public class BootStrapData implements CommandLineRunner {
 
         Publisher savedPublisher = publisherRepository.save(publisher1);
 
-        Author author1Saved = authorRepository.save(author1);
-        Author author2Saved = authorRepository.save(author2);
-
-        Book book1Saved = bookRepository.save(book1);
-        Book book2Saved = bookRepository.save(book2);
-
         book1Saved.setPublisher(savedPublisher);
-        book1Saved.getAuthors().add(author1Saved);
-
-        author1Saved.getBooks().add(book1Saved);
-        author2Saved.getBooks().add(book2Saved);
-        savedPublisher.getBooks().add(book1Saved);
+      //  book2Saved.setPublisher(savedPublisher);
 
         authorRepository.save(author1Saved);
         authorRepository.save(author2Saved);
         bookRepository.save(book1Saved);
+        bookRepository.save(book2Saved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author count: " + authorRepository.count());
